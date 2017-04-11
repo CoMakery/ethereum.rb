@@ -48,8 +48,11 @@ module Ethereum
     end
 
     def decode_address(value, _ = nil, _)
-      raise ArgumentError if value.size != 40
-      value
+      if match = value.match(/^0*([0-9a-f]{40})$/i)
+        match[1]
+      else
+        raise ArgumentError.new("Invalid address #{value.inspect}")
+      end
     end
 
     def decode_bytes(value, subtype, start)
