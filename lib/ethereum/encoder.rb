@@ -77,8 +77,8 @@ module Ethereum
 
     def encode_address(value, _)
       value = value.gsub(/^0x/,'')
-      raise ArgumentError if value.size != 40
-      value
+      raise ArgumentError unless value.match(/^[0-9a-f]{40}$/i)
+      value.rjust(64, '0')
     end
 
     def ensure_prefix(value)
